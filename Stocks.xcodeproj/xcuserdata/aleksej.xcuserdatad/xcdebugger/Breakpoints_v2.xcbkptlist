@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "766A9AAA-65E9-4D3B-AD02-D441F25EF1AF"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5266376F-2E52-4EB9-8F2C-1D8843350F55"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Stocks/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6EBCB03-4B92-49FA-9639-CFF161BD6649"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Stocks/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "C6EBCB03-4B92-49FA-9639-CFF161BD6649 - 6a35be9efeb433b8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Stocks.ViewController.companyImageView.getter : Swift.Optional&lt;__C.UIImageView&gt;"
+                  moduleName = "Stocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aleksej/Desktop/Stocks/Stocks/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "C6EBCB03-4B92-49FA-9639-CFF161BD6649 - 90766ae14ff807ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Stocks.ViewController.companyImageView.setter : Swift.Optional&lt;__C.UIImageView&gt;"
+                  moduleName = "Stocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aleksej/Desktop/Stocks/Stocks/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "155">
+               </Location>
+               <Location
+                  uuid = "C6EBCB03-4B92-49FA-9639-CFF161BD6649 - f29469e6347e5ebb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Stocks.ViewController.companyImageView.modify : Swift.Optional&lt;__C.UIImageView&gt;"
+                  moduleName = "Stocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aleksej/Desktop/Stocks/Stocks/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "65">
+               </Location>
+               <Location
+                  uuid = "C6EBCB03-4B92-49FA-9639-CFF161BD6649 - 5f5c1f0238ba78ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Stocks.ViewController.companyImageView.modify : Swift.Optional&lt;__C.UIImageView&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Stocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aleksej/Desktop/Stocks/Stocks/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "C6EBCB03-4B92-49FA-9639-CFF161BD6649 - 25dbacfa50ec7707"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Stocks.ViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Stocks.ViewController"
+                  moduleName = "Stocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aleksej/Desktop/Stocks/Stocks/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "1151">
+               </Location>
+               <Location
+                  uuid = "C6EBCB03-4B92-49FA-9639-CFF161BD6649 - eb7b828aabc3da6b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Stocks.ViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Stocks.ViewController&gt;"
+                  moduleName = "Stocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aleksej/Desktop/Stocks/Stocks/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "1092">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
