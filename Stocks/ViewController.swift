@@ -55,9 +55,11 @@ class ViewController: UIViewController {
         let token = "pk_fe9073a60e1e4b95aef88171909d8290"
         
         guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/quote?token=\(token)") else{
+            DispatchQueue.main.async { [weak self] in
+                self?.createCustomAlert(title: "Connection alert", message: "No connection available")
+            }
             return
         }
-        
         
         let dataTask = URLSession.shared.dataTask(with: url){ [weak self] (data, response, error) in
             if let data = data,
@@ -66,7 +68,10 @@ class ViewController: UIViewController {
                 self?.parseQuote(from: data)
             }
             else {
-                print("Network error!")
+                DispatchQueue.main.async { [weak self] in
+                    self?.activityIndicator.stopAnimating()
+                    self?.createCustomAlert(title: "Data transmission error", message: "An error or denial of access was received")
+                }
             }
         }
         
@@ -77,6 +82,9 @@ class ViewController: UIViewController {
         let token = "pk_fe9073a60e1e4b95aef88171909d8290"
         
         guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/logo?token=\(token)") else{
+            DispatchQueue.main.async { [weak self] in
+                self?.createCustomAlert(title: "ImageConnection alert", message: "No connection to image server")
+            }
             return
         }
         
@@ -87,7 +95,10 @@ class ViewController: UIViewController {
                 self?.parseImage(from: data)
             }
             else {
-                print("Network error!")
+                DispatchQueue.main.async { [weak self] in
+                    self?.activityIndicator.stopAnimating()
+                    self?.createCustomAlert(title: "Image data transmission error", message: "An error or denial of access was received")
+                }
             }
         }
         
@@ -111,7 +122,10 @@ class ViewController: UIViewController {
             }
             
         } catch{
-            print("JSON parsing error: " + error.localizedDescription)
+            DispatchQueue.main.async { [weak self] in
+                self?.activityIndicator.stopAnimating()
+                self?.createCustomAlert(title: "JSON parsing error", message: error.localizedDescription)
+            }
         }
     }
     
@@ -127,7 +141,10 @@ class ViewController: UIViewController {
             
             
         } catch{
-            print("JSON parsing error: " + error.localizedDescription)
+            DispatchQueue.main.async { [weak self] in
+                self?.activityIndicator.stopAnimating()
+                self?.createCustomAlert(title: "JSON parsing error", message: error.localizedDescription)
+            }
         }
     }
     
@@ -141,14 +158,16 @@ class ViewController: UIViewController {
             if let data = data,
                 (response as? HTTPURLResponse)?.statusCode == 200,
                 error == nil {
-                
                 DispatchQueue.main.async { [weak self] in
                     self?.companyImageView.image = UIImage(data: data)
                 }
                 
             }
             else {
-                print("Image download error!")
+                DispatchQueue.main.async { [weak self] in
+                    self?.activityIndicator.stopAnimating()
+                    self?.createCustomAlert(title: "Image download error", message: "An error or denial of access was received")
+                }
             }
         }
         
@@ -185,9 +204,21 @@ class ViewController: UIViewController {
         let selectedSymbol = Array(companies.values)[selectedRow]
         
         requestImage(for: selectedSymbol)
+        activityIndicator.startAnimating()
         requestQuote(for: selectedSymbol)
         
     }
+    
+    private func createCustomAlert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: NSLocalizedString("Close", comment: "Close action"), style: .cancel, handler: { _ in
+        NSLog("The \"OK\" alert occured.")
+        })
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     
 }
 

@@ -91,7 +91,9 @@ class TableViewController: UITableViewController {
                 self?.parseQuote(from: data)
             }
             else {
-                print("Network error!")
+                DispatchQueue.main.async { [weak self] in
+                    self?.createCustomAlert(title: "Data transmission error", message: "An error or denial of access was received")
+                }
             }
         }
         
@@ -103,9 +105,12 @@ class TableViewController: UITableViewController {
             let jsonObject = try JSONSerialization.jsonObject(with: data)
             
             guard
-                let json = jsonObject as? [Any]
-                
-                /*let priceChange = json["change"] as? Double*/ else { return print("Invalid JSON")}
+                let json = jsonObject as? [Any] else {
+                    return DispatchQueue.main.async { [weak self] in
+                        self?.createCustomAlert(title: "JSON parsing error", message: "Wrong collection type")
+                    }
+                    
+            }
                 
             for element in json{
                 
@@ -115,24 +120,30 @@ class TableViewController: UITableViewController {
                         let companySymbol = el["symbol"] as? String,
                         let price = el["latestPrice"] as? Double,
                         let priceChange = el["change"] as? Double{
+                        
                         self.data.append(CellData.init(companyName: companyName,
-                        companySymbol: companySymbol,
-                        companyStockPrice: price,
-                        companyStockPriceChange: priceChange))
+                            companySymbol: companySymbol,
+                            companyStockPrice: price,
+                            companyStockPriceChange: priceChange))
+                        
                         DispatchQueue.main.async { [weak self] in
                             self?.refreshTable()
                         }
                     }else{
-                        print("incrorrect JSON")
+                        DispatchQueue.main.async { [weak self] in
+                            self?.createCustomAlert(title: "JSON parsing error", message: "Wrong type of some elemet/elements")
+                        }
+                    }
+                }else{
+                    DispatchQueue.main.async { [weak self] in
+                        self?.createCustomAlert(title: "JSON parsing error", message: "Wrong collection type")
                     }
                 }
             }
-            
-            print(self.data)
-            
-            
         } catch{
-            print("JSON parsing error: " + error.localizedDescription)
+            DispatchQueue.main.async { [weak self] in
+                self?.createCustomAlert(title: "JSON parsing error", message: error.localizedDescription)
+            }
         }
     }
     
@@ -140,6 +151,15 @@ class TableViewController: UITableViewController {
         self.indexCounter = 0
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
+    }
+    
+    private func createCustomAlert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: NSLocalizedString("Close", comment: "Close action"), style: .cancel, handler: { _ in
+        NSLog("The \"OK\" alert occured.")
+        })
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
