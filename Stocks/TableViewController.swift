@@ -21,8 +21,6 @@ class TableViewController: UITableViewController {
     
     var data = [CellData]()
     
-    var indexCounter = 0
-    
     override func viewDidLoad() {
         
         requestQuote()
@@ -57,11 +55,10 @@ class TableViewController: UITableViewController {
         cell.price = data[indexPath.row].companyStockPrice
         cell.priceChange = data[indexPath.row].companyStockPriceChange
         
-        if indexCounter % 2 != 0{
+        if indexPath.row % 2 == 1{
             cell.backgroundColor = #colorLiteral(red: 0.6296653072, green: 0.8128914948, blue: 0.9851326346, alpha: 1)
-            indexCounter += 1
         } else{
-            indexCounter += 1
+            cell.backgroundColor = .white
         }
         
         if let change = cell.priceChange{
@@ -79,7 +76,7 @@ class TableViewController: UITableViewController {
         
         let token = "pk_fe9073a60e1e4b95aef88171909d8290"
         
-        guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/market/list/mostactive?token=\(token)") else{
+        guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/market/list/mostactive?listLimit=50&token=\(token)") else{
             return
         }
         
@@ -148,7 +145,6 @@ class TableViewController: UITableViewController {
     }
     
     private func refreshTable(){
-        self.indexCounter = 0
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
