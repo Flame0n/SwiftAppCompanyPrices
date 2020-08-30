@@ -18,6 +18,8 @@ class ViewController: UIViewController {
         "Facebook": "FB"
     ]
     
+    @IBOutlet weak var titleNavigationBar: UINavigationItem!
+    
     @IBOutlet weak var companyNameLabel: UILabel!
     
     @IBOutlet weak var companySymbolLabel: UILabel!
@@ -35,7 +37,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        companyNameLabel.text = "Tinkoff"
+        companyNameLabel.text = "-"
+        
+        titleNavigationBar.title = "Chosen stocks"
         
         companyPickerView.dataSource = self
         companyPickerView.delegate = self
@@ -90,6 +94,27 @@ class ViewController: UIViewController {
         dataTask.resume()
     }
     
+    private func parseQuote(from data: Data){
+        do{
+            let jsonObject = try JSONSerialization.jsonObject(with: data)
+            
+            guard
+                let json = jsonObject as? [String: Any],
+                let companyName = json["companyName"] as? String,
+                let companySymbol = json["symbol"] as? String,
+                let price = json["latestPrice"] as? Double,
+                let priceChange = json["change"] as? Double else { return print("Invalid JSON")}
+            
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.displayStockInfo(companyName, companySymbol, price, priceChange)
+            }
+            
+        } catch{
+            print("JSON parsing error: " + error.localizedDescription)
+        }
+    }
+    
     private func parseImage(from data: Data){
         do{
             let jsonObject = try JSONSerialization.jsonObject(with: data)
@@ -130,49 +155,7 @@ class ViewController: UIViewController {
         dataTask.resume()
     }
     
-    private func parseQuote(from data: Data){
-        do{
-            let jsonObject = try JSONSerialization.jsonObject(with: data)
-            
-            guard
-                let json = jsonObject as? [String: Any],
-                let companyName = json["companyName"] as? String,
-                let companySymbol = json["symbol"] as? String,
-                let price = json["latestPrice"] as? Double,
-                let priceChange = json["change"] as? Double else { return print("Invalid JSON")}
-            
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.displayStockInfo(companyName, companySymbol, price, priceChange)
-            }
-            
-        } catch{
-            print("JSON parsing error: " + error.localizedDescription)
-        }
-    }
     
-    private func getCompanyList(){
-        
-        let token = "pk_fe9073a60e1e4b95aef88171909d8290"
-        
-        guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/market/list/quote?token=\(token)") else{
-            return
-        }
-        
-        
-        let dataTask = URLSession.shared.dataTask(with: url){ [weak self] (data, response, error) in
-            if let data = data,
-                (response as? HTTPURLResponse)?.statusCode == 200,
-                error == nil {
-                self?.parseQuote(from: data)
-            }
-            else {
-                print("Network error!")
-            }
-        }
-        
-        dataTask.resume()
-    }
     
     private func displayStockInfo(_ companyName: String, _ companySymbol: String, _ price: Double, _ priceChange: Double){
         activityIndicator.stopAnimating()
@@ -182,7 +165,7 @@ class ViewController: UIViewController {
         priceChangeLabel.text = "\(priceChange)"
         
         if priceChange > 0{
-            priceChangeLabel.textColor = .green
+            priceChangeLabel.textColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         }else if priceChange < 0 {
             priceChangeLabel.textColor = .red
         }
