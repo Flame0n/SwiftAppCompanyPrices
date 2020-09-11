@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Stocks
-//
-//  Created by Алексей on 28.08.2020.
-//  Copyright © 2020 Tinkoff. All rights reserved.
-//
 
 import UIKit
 

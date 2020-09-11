@@ -3,17 +3,9 @@
 //  Stocks
 //
 //  Created by Алексей on 29.08.2020.
-//  Copyright © 2020 Tinkoff. All rights reserved.
-//
 
 import UIKit
 
-struct CellData{
-    var companyName : String?
-    var companySymbol : String?
-    var companyStockPrice : Double?
-    var companyStockPriceChange : Double?
-}
 
 class TableViewController: UITableViewController {
 
@@ -50,10 +42,13 @@ class TableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "custom") as! StocksCell
-        cell.name = data[indexPath.row].companyName
-        cell.symbol = data[indexPath.row].companySymbol
-        cell.price = data[indexPath.row].companyStockPrice
-        cell.priceChange = data[indexPath.row].companyStockPriceChange
+        
+        
+        cell.cellData = data[indexPath.row]
+        
+        guard let bufData = cell.cellData else  {
+            return cell
+        }
         
         if indexPath.row % 2 == 1{
             cell.backgroundColor = #colorLiteral(red: 0.6296653072, green: 0.8128914948, blue: 0.9851326346, alpha: 1)
@@ -61,7 +56,7 @@ class TableViewController: UITableViewController {
             cell.backgroundColor = .white
         }
         
-        if let change = cell.priceChange{
+        if let change = bufData.priceChange{
             if change > 0.0{
                 cell.priceChangeView.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             } else if change < 0.0{
@@ -79,7 +74,6 @@ class TableViewController: UITableViewController {
         guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/market/list/mostactive?listLimit=50&token=\(token)") else{
             return
         }
-        
         
         let dataTask = URLSession.shared.dataTask(with: url){ [weak self] (data, response, error) in
             if let data = data,
@@ -106,7 +100,6 @@ class TableViewController: UITableViewController {
                     return DispatchQueue.main.async { [weak self] in
                         self?.createCustomAlert(title: "JSON parsing error", message: "Wrong collection type")
                     }
-                    
             }
                 
             for element in json{
@@ -118,10 +111,10 @@ class TableViewController: UITableViewController {
                         let price = el["latestPrice"] as? Double,
                         let priceChange = el["change"] as? Double{
                         
-                        self.data.append(CellData.init(companyName: companyName,
-                            companySymbol: companySymbol,
-                            companyStockPrice: price,
-                            companyStockPriceChange: priceChange))
+                        self.data.append(CellData.init(name: companyName,
+                            symbol: companySymbol,
+                            price: price,
+                            priceChange: priceChange))
                         
                         DispatchQueue.main.async { [weak self] in
                             self?.refreshTable()

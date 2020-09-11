@@ -3,18 +3,13 @@
 //  Stocks
 //
 //  Created by Алексей on 29.08.2020.
-//  Copyright © 2020 Tinkoff. All rights reserved.
-//
 
 import UIKit
 import Foundation
 
 class StocksCell: UITableViewCell {
 
-    var name : String?
-    var symbol : String?
-    var price : Double?
-    var priceChange : Double?
+    var cellData: CellData?
     
     var nameView : UILabel = {
         var label = UILabel()
@@ -76,26 +71,36 @@ class StocksCell: UITableViewCell {
         
     }
     
+    func createConstraints(view: UILabel){
+        symbolView.leftAnchor.constraint(equalTo: self.nameView.rightAnchor).isActive = true
+        symbolView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        symbolView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        symbolView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
+        symbolView.textAlignment = .center
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
+        guard let data = cellData else {
+            return
+        }
         
-        if let name = name {
+        if let name = data.name {
             nameView.text = name
         }
         
-        if let symbol = symbol {
+        if let symbol = data.symbol {
             symbolView.text = symbol
         }
         
-        if let price = price {
+        if let price = data.price {
             priceView.text = "\(price)"
         }
         
-        if let priceChange = priceChange{
+        if let priceChange = data.priceChange{
             priceChangeView.text = "\(priceChange)"
         }
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
